@@ -24,10 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party apps
     'phonenumber_field',
-    
     'crispy_forms',
-    
     # local_apps
     'users.apps.UsersConfig',
     'shop.apps.ShopConfig',

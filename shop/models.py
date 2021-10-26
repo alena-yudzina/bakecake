@@ -93,9 +93,9 @@ class Order(models.Model):
                                null=True,
                                verbose_name='клиент')
     cake = models.OneToOneField(to=Cake,
-                             on_delete=models.SET_NULL,
-                             null=True,
-                             verbose_name='торт')
+                                on_delete=models.SET_NULL,
+                                null=True,
+                                verbose_name='торт')
     comment = models.TextField(blank=True,
                                verbose_name='комментарий к заказу')
     destination = models.CharField(max_length=200)
