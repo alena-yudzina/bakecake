@@ -2,14 +2,14 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}Sign Up{% endblock title%}
+{% block title %}Регистрация{% endblock title%}
 
 {% block content %}
-    <h2>Sign up</h2>
+    <h2>Регистрация</h2>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-success" type="submit">Sign Up</button>
+        <button class="btn btn-success" type="submit">Зарегистрироваться</button>
         <br>
         <br>
         <p><a href="https://netrack.ru/storage/2019/12/Prilozhenie-N2.-Forma-soglasiya-na-obrabotku-personalnykh-dannykh.pdf">Форма согласия на обработку персональных данных</a></p>

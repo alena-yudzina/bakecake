@@ -91,7 +91,8 @@ class Order(models.Model):
     client = models.ForeignKey(to=User,
                                on_delete=models.SET_NULL,
                                null=True,
-                               verbose_name='клиент')
+                               verbose_name='клиент',
+                               related_name='orders')
     cake = models.OneToOneField(to=Cake,
                                 on_delete=models.SET_NULL,
                                 null=True,
