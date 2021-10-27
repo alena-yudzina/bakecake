@@ -14,7 +14,7 @@ class CakeLevel(models.Model):
     )
 
     def __str__(self):
-        return f'Число уровней: {self.level}'
+        return f'Число уровней: {self.level_num}'
 
 
 class CakeForm(models.Model):
