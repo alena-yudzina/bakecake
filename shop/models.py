@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.html import format_html
 
 
 User = get_user_model()
@@ -13,8 +14,11 @@ class CakeLevel(models.Model):
         verbose_name='цена'
     )
 
+    class Meta:
+        ordering = ('price', )
+
     def __str__(self):
-        return f'Число уровней: {self.level}'
+        return str(self.level_num)
 
 
 class CakeForm(models.Model):
@@ -23,6 +27,10 @@ class CakeForm(models.Model):
     price = models.PositiveSmallIntegerField(
         verbose_name='цена'
     )
+
+    class Meta:
+        ordering = ('price', )
+
 
     def __str__(self):
         return self.type
@@ -33,6 +41,9 @@ class Topping(models.Model):
                             verbose_name='название')
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
+    class Meta:
+        ordering = ('price', )
+
     def __str__(self):
         return self.name
 
@@ -42,9 +53,14 @@ class Berry(models.Model):
                             verbose_name='название')
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
-    def __str__(self):
-        return self.name
+    class Meta:
+        ordering = ('price', )
 
+    def __str__(self):
+        return format_html(
+        '{} <span   >+{}&#8381;</span>',
+        self.name, self.price
+    )
 
 class Decor(models.Model):
     name = models.CharField(max_length=100,
@@ -52,6 +68,9 @@ class Decor(models.Model):
     price = models.PositiveSmallIntegerField(
         verbose_name='цена'
     )
+
+    class Meta:
+        ordering = ('price', )
 
     def __str__(self):
         return self.name

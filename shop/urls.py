@@ -8,4 +8,5 @@ from .views import HomePageView
 urlpatterns = [
     # path('', views.show_main_page, name='main_page'),
     path('', HomePageView.as_view(), name='home'),
+    path('cake', views.make_cake_page, name='make_cake_page')
 ]
