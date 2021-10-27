@@ -33,7 +33,7 @@
       </h2>
     </div>
   </div>
-  <form action="" method='POST'>
+  <form action="{% url 'order_details' %}" method='POST'>
     {% csrf_token %}
     {% include '_cake_params.html' with part='Число уровней' options=form.cake_level %}
     {% include '_cake_params.html' with part='Форма ' options=form.cake_form %}
