@@ -46,7 +46,11 @@
                                 <th scope="row">{{ order.id }}</th>
                                 <td>{{ order.cake }}</td>
                                 <td>{{ order.get_status_display }}</td>
-                                <td>Отменить</td>
+								{% if order.get_status_display == "Заявка обрабатывается" %}
+                                	<td>Отменить</td>
+								{% else %}
+									<td></td>
+								{% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
