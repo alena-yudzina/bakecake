@@ -37,7 +37,8 @@ class CustomUser(AbstractUser):
 
     agreement = models.BooleanField(
         'Согласие на обработку персональных даных',
-        validators=[validate_agreement]
+        validators=[validate_agreement],
+        default=True
     )
 
     class Meta:
