@@ -112,7 +112,7 @@ class Order(models.Model):
                                null=True,
                                verbose_name='клиент',
                                related_name='orders')
-    cake = models.OneToOneField(to=Cake,
+    cake = models.ForeignKey(to=Cake,
                                 on_delete=models.SET_NULL,
                                 null=True,
                                 verbose_name='торт')

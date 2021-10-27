@@ -14,11 +14,11 @@ def validate_agreement(value):
 
 class CustomUser(AbstractUser):
     
-    firstname = models.CharField(
+    first_name = models.CharField(
         verbose_name='Имя',
         max_length=50
     )
-    lastname = models.CharField(
+    last_name = models.CharField(
         verbose_name='Фамилия',
         max_length=50
     )
@@ -46,4 +46,4 @@ class CustomUser(AbstractUser):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return f"{self.firstname} {self.lastname}"
+        return f'{self.username} {self.first_name} {self.last_name}'
