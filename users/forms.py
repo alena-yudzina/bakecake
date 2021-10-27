@@ -14,6 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
             'phonenumber',
             'social_network',
             'address',
+            'agreement'
         )
 
 

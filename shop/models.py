@@ -20,7 +20,6 @@ class CakeLevel(models.Model):
     def __str__(self):
         return str(self.level_num)
 
-
 class CakeForm(models.Model):
     type = models.CharField(max_length=100,
                             verbose_name='тип')
@@ -110,7 +109,8 @@ class Order(models.Model):
     client = models.ForeignKey(to=User,
                                on_delete=models.SET_NULL,
                                null=True,
-                               verbose_name='клиент')
+                               verbose_name='клиент',
+                               related_name='orders')
     cake = models.OneToOneField(to=Cake,
                                 on_delete=models.SET_NULL,
                                 null=True,
