@@ -8,7 +8,8 @@ User = get_user_model()
 
 class CakeLevel(models.Model):
     level_num = models.PositiveSmallIntegerField(
-        verbose_name='число уровней торта'
+        verbose_name='число уровней торта',
+        default=1
     )
     price = models.PositiveSmallIntegerField(
         verbose_name='цена'
@@ -22,6 +23,7 @@ class CakeLevel(models.Model):
 
 class CakeForm(models.Model):
     type = models.CharField(max_length=100,
+                            unique=True,
                             verbose_name='тип')
     price = models.PositiveSmallIntegerField(
         verbose_name='цена'
@@ -30,13 +32,13 @@ class CakeForm(models.Model):
     class Meta:
         ordering = ('price', )
 
-
     def __str__(self):
         return self.type
 
 
 class Topping(models.Model):
     name = models.CharField(max_length=100,
+                            unique=True,
                             verbose_name='название')
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
@@ -49,6 +51,7 @@ class Topping(models.Model):
 
 class Berry(models.Model):
     name = models.CharField(max_length=100,
+                            unique=True,
                             verbose_name='название')
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
@@ -56,13 +59,12 @@ class Berry(models.Model):
         ordering = ('price', )
 
     def __str__(self):
-        return format_html(
-        '{} <span   >+{}&#8381;</span>',
-        self.name, self.price
-    )
+        return self.name
+
 
 class Decor(models.Model):
     name = models.CharField(max_length=100,
+                            unique=True,
                             verbose_name='название')
     price = models.PositiveSmallIntegerField(
         verbose_name='цена'
@@ -130,3 +132,7 @@ class CancellationOrder(models.Model):
                                  verbose_name='отмененный заказ')
     comment = models.TextField(blank=True,
                                verbose_name='комментарий пользователя')
+
+
+class PromoCode(models.Model):
+    pass
