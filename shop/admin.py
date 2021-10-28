@@ -8,7 +8,8 @@ from .models import (
     Decor,
     Cake,
     Order,
-    CancellationOrder
+    CancellationOrder,
+    PromoCode
 )
 
 
@@ -19,4 +20,5 @@ admin.site.register([CakeLevel,
                      Decor,
                      Cake,
                      Order,
-                     CancellationOrder])
+                     CancellationOrder,
+                     PromoCode])

@@ -92,6 +92,17 @@ class Cake(models.Model):
                                        verbose_name='надпись на торте')
 
 
+class PromoCode(models.Model):
+    code = models.CharField(max_length=10,
+                            unique=True,
+                            blank=True,
+                            null=True,
+                            verbose_name='промокод')
+
+    def __str__(self):
+        return self.code
+
+
 class Order(models.Model):
 
     class OrderStatus(models.IntegerChoices):
@@ -120,6 +131,13 @@ class Order(models.Model):
                                verbose_name='комментарий к заказу')
     destination = models.CharField(max_length=200)
     delivery_time = models.DateTimeField()
+    promo_code = models.ForeignKey(to=PromoCode,
+                                   on_delete=models.SET_NULL,
+                                   blank=True,
+                                   null=True,
+                                   related_name='orders',
+                                   verbose_name='промокод')
+
 
     def __str__(self):
         return f'Заказ {self.client.username} на {self.delivery_time}'
@@ -131,7 +149,3 @@ class CancellationOrder(models.Model):
                                  verbose_name='отмененный заказ')
     comment = models.TextField(blank=True,
                                verbose_name='комментарий пользователя')
-
-
-class PromoCode(models.Model):
-    pass
