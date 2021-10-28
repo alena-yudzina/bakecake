@@ -2,6 +2,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import CustomUser
+from shop.models import CancellationOrder
+
+
+class CancellationOrderForm(forms.ModelForm):
+
+    class Meta:
+        model = CancellationOrder
+        fields = ('order', 'comment',)
 
 
 class CustomUserCreationForm(UserCreationForm):
