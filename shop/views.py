@@ -1,4 +1,5 @@
 from django import urls
+from django.http import JsonResponse
 
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
@@ -6,6 +7,11 @@ from django.views.generic import TemplateView
 from shop.models import Berry, CakeLevel, CakeForm, Decor, Topping
 
 from .forms import CakeConstructorForm, OrderDetailsForm
+
+
+def check_promo_code(request, code):
+    code_is_used = request.user.orders.filter(promo_code__code=code).exists()
+    return JsonResponse({'codeIsUsed': code_is_used})
 
 
 def show_main_page(request):
@@ -23,6 +29,8 @@ def make_cake_page(request):
 
 
 def order_details(request):
+    if request.method == 'GET':
+        return redirect(urls.reverse('make_cake_page'))
     cake_params = CakeConstructorForm(request.POST)
     cake_params.is_valid()
     cake_level_price = CakeLevel.objects.get(pk=cake_params.cleaned_data['cake_level']).price
