@@ -20,6 +20,7 @@ class CakeLevel(models.Model):
     def __str__(self):
         return str(self.level_num)
 
+
 class CakeForm(models.Model):
     type = models.CharField(max_length=100,
                             unique=True,
@@ -81,8 +82,14 @@ class Cake(models.Model):
                               on_delete=models.SET_NULL,
                               null=True,
                               verbose_name='число уровней')
-    topping = models.ManyToManyField(to=Topping,
-                                     verbose_name='топпинги')
+    form = models.ForeignKey(to=CakeForm,
+                             on_delete=models.SET_NULL,
+                             null=True,
+                             verbose_name='форма торта')
+    topping = models.ForeignKey(to=Topping,
+                                on_delete=models.SET_NULL,
+                                null=True,
+                                verbose_name='топпинги')
     berry = models.ManyToManyField(to=Berry,
                                    verbose_name='ягоды')
     decor = models.ManyToManyField(to=Decor,
@@ -90,6 +97,9 @@ class Cake(models.Model):
     caption_on_cake = models.CharField(blank=True,
                                        max_length=200,
                                        verbose_name='надпись на торте')
+
+    def __str__(self):
+        return f'Уровней: {self.level} | Форма: {self.form} | Топпинг: {self.topping}'
 
 
 class PromoCode(models.Model):
