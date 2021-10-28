@@ -1,15 +1,15 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from shop.models import CancellationOrder
 
 from .models import CustomUser
-from shop.models import CancellationOrder
 
 
 class CancellationOrderForm(forms.ModelForm):
 
     class Meta:
         model = CancellationOrder
-        fields = ('order', 'comment',)
+        fields = ('comment',)
 
 
 class CustomUserCreationForm(UserCreationForm):
