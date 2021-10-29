@@ -47,3 +47,10 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f'{self.username} {self.first_name} {self.last_name}'
+
+
+class UsersCount(CustomUser):
+    class Meta:
+        proxy = True
+        verbose_name = 'Статистика по пользователям'
+        verbose_name_plural = 'Статистика по пользователям'
