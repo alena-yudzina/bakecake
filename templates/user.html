@@ -47,7 +47,7 @@
                                 <td>{{ order.cake }}</td>
                                 <td>{{ order.get_status_display }}</td>
 								{% if order.get_status_display == "Заявка обрабатывается" %}
-									<td><a href="{% url 'cancel' %}" class="btn btn-primary ml-2">Отменить</a></td>
+									<td><a href="{% url 'cancel' order.id %}" class="btn btn-primary ml-2">Отменить</a></td>
 								{% else %}
 									<td></td>
 								{% endif %}
