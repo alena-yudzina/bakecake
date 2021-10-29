@@ -160,3 +160,19 @@ class CancellationOrder(models.Model):
                                  verbose_name='отмененный заказ')
     comment = models.TextField(blank=True,
                                verbose_name='комментарий пользователя')
+
+
+class OrderSummary(Order):
+
+    class Meta:
+        proxy = True
+        verbose_name = 'Статистика по статусам заказов'
+        verbose_name_plural = 'Статистика по статусам заказов'
+
+
+class CancellationOrderSummary(CancellationOrder):
+
+    class Meta:
+        proxy = True
+        verbose_name = 'Статистика отмененных заказов'
+        verbose_name_plural = 'Статистика отмененных заказов'
