@@ -26,7 +26,7 @@ class UsersCountAdmin(admin.ModelAdmin):
         )
 
         try:
-            users = response.context_data['cl'].queryset
+            users = response.context_data['cl'].queryset.filter(is_staff=False)
         except (AttributeError, KeyError):
             return response
 
