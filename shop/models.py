@@ -149,7 +149,6 @@ class Order(models.Model):
                                    related_name='orders',
                                    verbose_name='промокод')
 
-
     def __str__(self):
         return f'Заказ {self.client.username} на {self.delivery_time}, сумма {self.total_price}'
 

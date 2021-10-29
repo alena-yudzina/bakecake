@@ -34,28 +34,11 @@
         </h2>
       </div>
     </div>
-    <form action="{% url 'make_order' %}" method='POST'>
+    <form action="{% url 'make_order' %}" class="form-group" method='POST'>
       {% csrf_token %}
       {% for field in cake_params %}
         {{ field.as_hidden }}
       {% endfor %}
-      <div class="row mb-3 fs-5 border border-1">
-        <div class="col-sm-6 mt-2">
-          <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-sm">
-                Текущая цена торта
-              </span>
-            </div>
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="total_price">
-                {{ price }} &#8381;
-              </span>
-              <input type="hidden" id="price" name="cake_price">
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="row mb-3 fs-5 border border-1">
         <div class="col-sm-6 mt-2">
           <div class="input-group input-group-sm mb-3">
@@ -86,11 +69,45 @@
         <div class="col-sm-6 mt-2">
           <div class="input-group input-group-sm mb-3">
             <div class="input-group-prepend">
+              <span class="input-group-text">
+                Комментарий (не обязательно)
+              </span>
+            </div>
+            {{ form.comments }}
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3 fs-5 border border-1">
+        <div class="col-sm-6 mt-2">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-sm">
                 Когда
               </span>
             </div>
             {{ form.order_datetime }}
+          </div>
+          <p class="small fs-6">
+            {{ form.order_datetime.help_text }}
+            <p id="raise_price_notification" class="small fs-6 text-primary">
+            </p>
+          </p>
+        </div>
+      </div>
+      <div class="row mb-3 fs-5 border border-1">
+        <div class="col-sm-6 mt-2">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">
+                Цена торта
+              </span>
+            </div>
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="total_price">
+                {{ price }} &#8381;
+              </span>
+              <input type="hidden" id="price" name="cake_price">
+            </div>
           </div>
         </div>
       </div>

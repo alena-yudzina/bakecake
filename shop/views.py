@@ -11,11 +11,11 @@ from shop.models import Berry, Cake, CakeLevel, CakeForm, Decor, Order, Topping,
 from .forms import CakeConstructorForm, OrderDetailsForm
 
 
-
-
 def get_and_check_promo_code(request):
     actualPromoCode = PromoCode.objects.first().code
-    code_is_used = request.user.orders.filter(promo_code__code=actualPromoCode).exists()
+    code_is_used = request.user.orders.filter(
+        promo_code__code=actualPromoCode
+    ).exists()
     return JsonResponse(
         {'actualCode': actualPromoCode,'thisClientUsed': code_is_used}
     )
@@ -34,6 +34,7 @@ def make_cake_page(request):
         'cake_constructor.html',
         context=context
     )
+
 
 @login_required
 def order_details(request):
@@ -80,6 +81,7 @@ def make_order(request):
         cake=cake,
         destination=order_details['destination'],
         delivery_time=order_details['order_datetime'],
+        comment=order_details['comments'],
         promo_code=promo_code,
         total_price=request.POST.get('cake_price')
     )

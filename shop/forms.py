@@ -5,7 +5,6 @@ from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
 from shop.models import Berry, Decor, Topping, CakeLevel, CakeForm
 
 
-
 class CakeConstructorChoiceField(ModelChoiceField):
     def __init__(self, model, multiple=False, **kwargs):
         kwargs['queryset'] = model.objects.all()
@@ -49,17 +48,22 @@ class OrderDetailsForm(forms.Form):
     destination = forms.CharField(
         max_length=200,
         label='Куда доставить',
-        widget=forms.TextInput(attrs={'class': "form-control"}),
+        widget=forms.TextInput(attrs={'class': "form-control", 'class': "form-control"}),
+    )
+    comments = forms.CharField(
+        label='Комментарий к заказу',
+        required=False,
+        widget=forms.Textarea(attrs={"rows": 3})
     )
     order_datetime = forms.DateTimeField(
         label='Когда',
-        initial=initial_datetime,
+        # initial=initial_datetime,
         widget=forms.TextInput(
             attrs={
-                'class': "form-control",
+                'class': "form-control-sm",
                 'type': "datetime-local",
                 'min': initial_datetime()
             }
         ),
-        help_text = 'Минимальное время доставки 5 часов'
+        help_text = 'Минимальное время доставки 5 часов.'
     )
