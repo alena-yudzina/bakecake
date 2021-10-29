@@ -34,13 +34,32 @@ class CakeConstructorForm(forms.Form):
         widget=forms.TextInput(attrs={'class': "form-control border border-primary"}),
         required=False,
         help_text=('Можно сделать надпись, например: «С днем рождения!». '
-                   'Но, пожалуйста, уложитесь в 45 символов. Мы надеемся, что торт будут есть :)')
+                   'Но, пожалуйста, уложитесь в 45 символов. Мы надеемся, что торт будут есть, а не читать :)')
     )
 
 
+def initial_datetime():
+    import datetime
+    initial = datetime.datetime.today() + datetime.timedelta(hours=5)
+    initial = initial.strftime("%Y-%m-%dT%H:%M")
+    return initial
+
+
 class OrderDetailsForm(forms.Form):
-    price = forms.CharField(
-        label = 'Текущая цена торта',
+    destination = forms.CharField(
+        max_length=200,
+        label='Куда доставить',
         widget=forms.TextInput(attrs={'class': "form-control"}),
-        disabled=True
+    )
+    order_datetime = forms.DateTimeField(
+        label='Когда',
+        initial=initial_datetime,
+        widget=forms.TextInput(
+            attrs={
+                'class': "form-control",
+                'type': "datetime-local",
+                'min': initial_datetime()
+            }
+        ),
+        help_text = 'Минимальное время доставки 5 часов'
     )
