@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+from django import urls
+from django.shortcuts import resolve_url
 
 from environs import Env
 
@@ -101,6 +103,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+
+LOGIN_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 

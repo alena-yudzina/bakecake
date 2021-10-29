@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+
 from django import urls
 from django.http import JsonResponse
 
@@ -7,6 +9,8 @@ from django.views.generic import TemplateView
 from shop.models import Berry, Cake, CakeLevel, CakeForm, Decor, Order, Topping, PromoCode
 
 from .forms import CakeConstructorForm, OrderDetailsForm
+
+
 
 
 def get_and_check_promo_code(request):
@@ -21,6 +25,7 @@ def show_main_page(request):
     return render(request, 'main_page.html')
 
 
+@login_required
 def make_cake_page(request):
     form = CakeConstructorForm()
     context = {'form': form}
@@ -30,7 +35,7 @@ def make_cake_page(request):
         context=context
     )
 
-
+@login_required
 def order_details(request):
     if request.method == 'GET':
         return redirect(urls.reverse('make_cake_page'))
@@ -47,6 +52,7 @@ def order_details(request):
     return render(request, 'order_details.html', {'form': form, 'cake_params': cake_params, 'price': total_price})
 
 
+@login_required
 def make_order(request):
     if request.method == 'GET':
         return redirect(urls.reverse('make_cake_page'))
