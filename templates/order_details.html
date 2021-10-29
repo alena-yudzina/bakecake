@@ -36,6 +36,9 @@
     </div>
     <form action="{% url 'make_order' %}" method='POST'>
       {% csrf_token %}
+      {% for field in cake_params %}
+        {{ field.as_hidden }}
+      {% endfor %}
       <div class="row mb-3 fs-5 border border-1">
         <div class="col-sm-6 mt-2">
           <div class="input-group input-group-sm mb-3">
@@ -44,7 +47,12 @@
                 Текущая цена торта
               </span>
             </div>
-            {{ form.price }}
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="total_price">
+                {{ price }} &#8381;
+              </span>
+              <input type="hidden" id="price" name="cake_price">
+            </div>
           </div>
         </div>
       </div>
@@ -57,8 +65,33 @@
               </span>
             </div>
             <input type="text" class="form-control" id="promo" maxlength="5">
+            <input type="hidden" id="promo_code" name="promo_code">
           </div>
-          <p id="promocode_checking" class="small fs-6"></p>
+        </div>
+      </div>
+      <p id="promocode_checking" class="small fs-6"></p>
+      <div class="row mb-3 fs-5 border border-1">
+        <div class="col-sm-6 mt-2">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">
+                Куда привезти
+              </span>
+            </div>
+            {{ form.destination }}
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3 fs-5 border border-1">
+        <div class="col-sm-6 mt-2">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">
+                Когда
+              </span>
+            </div>
+            {{ form.order_datetime }}
+          </div>
         </div>
       </div>
       <div class="row mb-3 ps-2 pe-2 fs-5 border border-1">
