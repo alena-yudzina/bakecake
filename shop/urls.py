@@ -11,5 +11,5 @@ urlpatterns = [
     path('cake', views.make_cake_page, name='make_cake_page'),
     path('order_details', views.order_details, name='order_details'),
     path('make_order', views.make_order, name='make_order'),
-    path('check_code/<str:code>', views.check_promo_code, name='check_promo_code'),
+    path('get_code', views.get_and_check_promo_code, name='get_and_check_promo_code'),
 ]
