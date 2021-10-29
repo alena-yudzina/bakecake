@@ -105,8 +105,6 @@ class Cake(models.Model):
 class PromoCode(models.Model):
     code = models.CharField(max_length=10,
                             unique=True,
-                            blank=True,
-                            null=True,
                             verbose_name='промокод')
 
     def __str__(self):
@@ -128,12 +126,15 @@ class Order(models.Model):
         default=OrderStatus.IS_PROCESSING,
         verbose_name='статус заказа')
 
+    total_price = models.PositiveSmallIntegerField(db_index=True,
+                                                   verbose_name='цена заказа')
+
     client = models.ForeignKey(to=User,
                                on_delete=models.SET_NULL,
                                null=True,
                                verbose_name='клиент',
                                related_name='orders')
-    cake = models.ForeignKey(to=Cake,
+    cake = models.OneToOneField(to=Cake,
                                 on_delete=models.SET_NULL,
                                 null=True,
                                 verbose_name='торт')
@@ -150,7 +151,7 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f'Заказ {self.client.username} на {self.delivery_time}'
+        return f'Заказ {self.client.username} на {self.delivery_time}, сумма {self.total_price}'
 
 
 class CancellationOrder(models.Model):
