@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.db.models import Count
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import CustomUser, UsersCount
@@ -24,9 +23,8 @@ class UsersCountAdmin(admin.ModelAdmin):
             request,
             extra_context=extra_context,
         )
-
         try:
-            users = response.context_data['cl'].queryset
+            users = response.context_data['cl'].queryset.filter(is_staff=False)
         except (AttributeError, KeyError):
             return response
 
