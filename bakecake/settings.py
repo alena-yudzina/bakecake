@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # local_apps
     'users.apps.UsersConfig',
     'shop.apps.ShopConfig',
+    'my_stat.apps.MyStatConfig'
 ]
 
 MIDDLEWARE = [
