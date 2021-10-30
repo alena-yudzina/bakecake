@@ -17,7 +17,7 @@ def get_and_check_promo_code(request):
         promo_code__code=actualPromoCode
     ).exists()
     return JsonResponse(
-        {'actualCode': actualPromoCode,'thisClientUsed': code_is_used}
+        {'actualCode': actualPromoCode, 'thisClientUsed': code_is_used}
     )
 
 
@@ -49,8 +49,12 @@ def order_details(request):
         *Decor.objects.filter(pk__in=cake_params.cleaned_data['decor']).values_list('price', flat=True),
         *Berry.objects.filter(pk__in=cake_params.cleaned_data['berry']).values_list('price', flat=True)
     ])
-    form = OrderDetailsForm(initial={'price': total_price,})
-    return render(request, 'order_details.html', {'form': form, 'cake_params': cake_params, 'price': total_price})
+    form = OrderDetailsForm(initial={'price': total_price })
+    return render(
+        request,
+        'order_details.html',
+        {'form': form, 'cake_params': cake_params, 'price': total_price}
+    )
 
 
 @login_required
@@ -85,8 +89,7 @@ def make_order(request):
         promo_code=promo_code,
         total_price=request.POST.get('cake_price')
     )
-    # Докрутить - нужно редиректеть на страницу "Мои заказы"
-    return render(request, 'order_details.html', {})
+    return redirect(urls.reverse('account'))
 
 
 class HomePageView(TemplateView):
