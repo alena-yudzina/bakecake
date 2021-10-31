@@ -49,7 +49,7 @@ def order_details(request):
         *Decor.objects.filter(pk__in=cake_params.cleaned_data['decor']).values_list('price', flat=True),
         *Berry.objects.filter(pk__in=cake_params.cleaned_data['berry']).values_list('price', flat=True)
     ])
-    form = OrderDetailsForm(initial={'price': total_price })
+    form = OrderDetailsForm(initial={'price': total_price, 'destination': request.user.address })
     return render(
         request,
         'order_details.html',
@@ -93,4 +93,4 @@ def make_order(request):
 
 
 class HomePageView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'super_main.html'

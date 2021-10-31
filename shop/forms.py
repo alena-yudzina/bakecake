@@ -30,7 +30,7 @@ class CakeConstructorForm(forms.Form):
     caption_on_cake = forms.CharField(
         max_length=45,
         label='Надпись',
-        widget=forms.TextInput(attrs={'class': "form-control border border-primary"}),
+        widget=forms.TextInput(attrs={'class': "form-control border border-secondary"}),
         required=False,
         help_text=('Можно сделать надпись, например: «С днем рождения!». '
                    'Но, пожалуйста, уложитесь в 45 символов. Мы надеемся, что торт будут есть, а не читать :)')
@@ -47,20 +47,21 @@ def initial_datetime():
 class OrderDetailsForm(forms.Form):
     destination = forms.CharField(
         max_length=200,
+        initial=1000,
         label='Куда доставить',
-        widget=forms.TextInput(attrs={'class': "form-control", 'class': "form-control"}),
+        widget=forms.TextInput(attrs={'class': "form-control"}),
     )
     comments = forms.CharField(
         label='Комментарий к заказу',
         required=False,
-        widget=forms.Textarea(attrs={"rows": 3})
+        widget=forms.Textarea(attrs={"rows": 3, 'class': "form-control-sm col-12 mt-0 pt-0 mb-3 border border-2"})
     )
     order_datetime = forms.DateTimeField(
         label='Когда',
         # initial=initial_datetime,
         widget=forms.TextInput(
             attrs={
-                'class': "form-control-sm",
+                'class': "form-control-sm border border-2",
                 'type': "datetime-local",
                 'min': initial_datetime()
             }

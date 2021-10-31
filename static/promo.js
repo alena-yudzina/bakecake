@@ -11,6 +11,7 @@ const userPromoCodeHiddenInput = document.querySelector('#promo_code');
 const promoCodeCheckingResult = document.querySelector('#promocode_checking');
 const totalPriceHiddenInput = document.querySelector('#price');
 const orderForm = document.querySelector('.form-group');
+const totalPriceLabel = document.querySelector('#cakePriceLabel');
 
 /*
 Логика подсчета итоговой цены
@@ -23,6 +24,19 @@ const getTotalPrice = () => priceFromConstructor * (
     1 - promoCodeRate + urgencyRate
 );
 
+/* Логика изменения лэйбла поля с ценой */
+const showPriceLabel = () => {
+    if (promoCodeRate && urgencyRate) {
+        totalPriceLabel.innerHTML = '<span class="text-success">&ndash;промокод</span> <span class="text-danger">+срочность</span>';
+    } else if (promoCodeRate) {
+        totalPriceLabel.innerHTML = '<span class="text-success">&ndash;промокод</span>'
+    } else if (urgencyRate) {
+        totalPriceLabel.innerHTML = '<span class="text-danger">+срочность</span>'
+    } else {
+        totalPriceLabel.innerHTML = ''
+    }
+}
+
 /*
 Логика изменения цены в зависимости от промокода
 */
@@ -32,24 +46,19 @@ const changePriceDueToUrgency = () => {
     const interval = (endTime - startTime) / 3600000;
     const notification = document.querySelector('#raise_price_notification');
     if (interval < 5) {
-        console.log('Находимся в интервале до 5 часов');
-        console.log(interval);
         urgencyRate = 0;
         notification.innerHTML = '<span style="color: red;">Время доставки меньше 5 часов, так быстро только пирожков можно напечь</span>';
     }
     if (interval >= 5 && interval < 24) {
-        console.log('Находимся в интервале от 5 до 24 часов');
-        console.log(interval);
         urgencyRate = 0.2;
         notification.innerHTML = 'Доставка в пределах 24 часов увеличивает цену на 20%';
     }
     if (interval >= 24) {
-        console.log('Находимся в интервале свыше 24 часов');
-        console.log(interval);
         urgencyRate = 0;
         notification.innerHTML = '';
     }
     currentPriceDisplay.innerHTML = `${getTotalPrice()} &#8381;`;
+    showPriceLabel();
 }
 
 /*
@@ -91,6 +100,7 @@ const userPromoCodeInputHandler = () => {
                 promoCodeRate = 0.2;
                 // Выводим цену с учетом промика и срочности заказа
                 currentPriceDisplay.innerHTML = `${getTotalPrice()} &#8381;`;
+                showPriceLabel();
             }
         } else if (userInput.length > 0) {
             promoCodeCheckingResult.innerHTML = 'К сожалению, у нас нет такого промокода.';
@@ -100,7 +110,6 @@ const userPromoCodeInputHandler = () => {
             promoCodeCheckingResult.innerHTML = '';
         }
     }
-
 
 /* Вешаем слушателей */
 
