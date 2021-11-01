@@ -6,9 +6,7 @@ from shop.models import Berry, Decor, Topping, CakeLevel, CakeForm
 
 
 class CakeConstructorChoiceField(ModelChoiceField):
-    def __init__(self, model, multiple=False, **kwargs):
-        kwargs['queryset'] = model.objects.all()
-        kwargs['initial'] = model.objects.first() if not multiple else None
+    def __init__(self, multiple=False, **kwargs):
         self.widget = CheckboxSelectMultiple() if multiple else RadioSelect()
         super().__init__(**kwargs)
 
@@ -22,11 +20,31 @@ class CakeConstructorChoiceField(ModelChoiceField):
 
 
 class CakeConstructorForm(forms.Form):
-    cake_level = CakeConstructorChoiceField(CakeLevel, multiple=False)
-    cake_form = CakeConstructorChoiceField(CakeForm, multiple=False)
-    topping = CakeConstructorChoiceField(Topping, multiple=False)
-    berry = CakeConstructorChoiceField(Berry, multiple=True)
-    decor = CakeConstructorChoiceField(Decor, multiple=True)
+    cake_level = CakeConstructorChoiceField(
+        multiple=False,
+        queryset=CakeLevel.objects.all(),
+        initial=CakeLevel.objects.first()    
+    )
+    cake_form = CakeConstructorChoiceField(
+        multiple=False,
+        queryset=CakeForm.objects.all(),
+        initial=CakeForm.objects.first()   
+    )
+    topping = CakeConstructorChoiceField(
+        multiple=False,
+        queryset=Topping.objects.all(),
+        initial=Topping.objects.first()   
+    )
+    berry = CakeConstructorChoiceField(
+        multiple=True,
+        queryset=Berry.objects.all(),
+        initial=Berry.objects.first()   
+    )
+    decor = CakeConstructorChoiceField(
+        multiple=True,
+        queryset=Decor.objects.all(),
+        initial=Decor.objects.first()
+    )
     caption_on_cake = forms.CharField(
         max_length=45,
         label='Надпись',
