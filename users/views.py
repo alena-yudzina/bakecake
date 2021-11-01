@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -12,10 +13,12 @@ class SignUpView(CreateView):
     template_name = 'signup.html'
 
 
+@login_required
 def show_orders(request):
 	return render(request=request, template_name='user.html', context={'user': request.user})
 
 
+@login_required
 def cancel_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':

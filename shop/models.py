@@ -15,6 +15,7 @@ class CakeLevel(models.Model):
     )
 
     class Meta:
+        verbose_name_plural = 'Уровни тортов'
         ordering = ('price', )
 
     def __str__(self):
@@ -30,6 +31,7 @@ class CakeForm(models.Model):
     )
 
     class Meta:
+        verbose_name_plural = 'Формы тортов'
         ordering = ('price', )
 
     def __str__(self):
@@ -43,6 +45,7 @@ class Topping(models.Model):
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
     class Meta:
+        verbose_name_plural = 'Топпинги'
         ordering = ('price', )
 
     def __str__(self):
@@ -56,6 +59,7 @@ class Berry(models.Model):
     price = models.PositiveSmallIntegerField(verbose_name='цена')
 
     class Meta:
+        verbose_name_plural = 'Ягоды'
         ordering = ('price', )
 
     def __str__(self):
@@ -71,6 +75,7 @@ class Decor(models.Model):
     )
 
     class Meta:
+        verbose_name_plural = 'Декоры'
         ordering = ('price', )
 
     def __str__(self):
@@ -98,6 +103,9 @@ class Cake(models.Model):
                                        max_length=200,
                                        verbose_name='надпись на торте')
 
+    class Meta:
+        verbose_name_plural = 'Торты'
+
     def __str__(self):
         return f'Уровней: {self.level} | Форма: {self.form} | Топпинг: {self.topping}'
 
@@ -106,6 +114,9 @@ class PromoCode(models.Model):
     code = models.CharField(max_length=10,
                             unique=True,
                             verbose_name='промокод')
+
+    class Meta:
+        verbose_name_plural = 'Промокоды'
 
     def __str__(self):
         return self.code
@@ -149,6 +160,9 @@ class Order(models.Model):
                                    related_name='orders',
                                    verbose_name='промокод')
 
+    class Meta:
+        verbose_name_plural = 'Заказы'
+
     def __str__(self):
         return f'Заказ {self.client.username} на {self.delivery_time}, сумма {self.total_price}'
 
@@ -159,6 +173,9 @@ class CancellationOrder(models.Model):
                                  verbose_name='отмененный заказ')
     comment = models.TextField(blank=True,
                                verbose_name='комментарий пользователя')
+
+    class Meta:
+        verbose_name_plural = 'Отмены заказов'
 
 
 class OrderSummary(Order):

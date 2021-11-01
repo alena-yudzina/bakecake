@@ -30,7 +30,7 @@
           <a href="{% url 'home' %}"
           style="color: whitesmoke; text-decoration:none"><span style="color: gold">B</span>ake<span style="color: gold">C</span>ake</a>
         </span>
-        {% if request.resolver_match.view_name != 'home' and request.resolver_match.view_name != 'login'%}
+        {% if request.resolver_match.view_name != 'home' and request.resolver_match.view_name != 'login' and request.resolver_match.view_name != 'signup'%}
           <div class="d-flex flex-row-reverse text-light">
             <div class="p-2">
               <a href="{% url 'make_cake_page' %}"
@@ -61,6 +61,14 @@
             </a>
             {% endif %}
           </div>
+          {% if request.user.is_staff %}
+          <div class="p-2">
+            <a href="{% url 'admin:index' %}"
+            style="color: whitesmoke; text-decoration:none">
+              Админка
+            </a>
+          </div>
+          {% endif %}
         </div>
       </div>
     </nav>

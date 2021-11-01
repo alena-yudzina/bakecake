@@ -40,12 +40,16 @@
 {% block content_title %}{% endblock %}
 
 {% block content %}
-  <div id="content-main" style="font-size: large;">
+  <div id="content-main" style="font-size: large; background-color: wheat; padding-left: 30px; padding-bottom: 30px; box-sizing: border-box;">
     <h1 style="font-size: larger; color: red;">
       Статистика BakeCake
     </h1>
-    <p>Общее количество заказов: {{ summary.orders }}</p>
+    <!-- Общее количество заказов -->
     <p>
+      <strong>Всего заказов:</strong> {{ summary.orders }}
+    </p>
+    <p>
+    <!-- Разбивка по статусам -->
       Из них:
       <ul>
         {% for name, value in summary.statuses %}
@@ -55,14 +59,39 @@
         {% endfor %}
       </ul>
     </p>
-    <p>Зарегистрировано пользователей: {{ summary.clients }}</p>
-    <p>Статистика по ингредиентам</p>
+    <!-- Зарегистрировано клиентов -->
+    <p><strong>Зарегистрировано пользователей:</strong> {{ summary.clients }}</p>
+    <p><strong>Статистика по ингредиентам</strong></p>
     <p>
-      Топинги:
+      Топпинги:
       <ul>
         {% for name, value in summary.topping.items %}
           <li style="font-size: large;">
             {{ name }} &mdash; {{ value }}
+          </li>
+        {% endfor %}
+      </ul>
+      Ягоды:
+      <ul>
+        {% for name, value in summary.berry.items %}
+          <li style="font-size: large;">
+            {% if name == None %}
+              Без ягод &mdash; {{ value }}
+            {% else %}
+              {{ name }} &mdash; {{ value }}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      Декор:
+      <ul>
+        {% for name, value in summary.decor.items %}
+          <li style="font-size: large;">
+            {% if name == None %}
+              Без декора &mdash; {{ value }}
+            {% else %}
+              {{ name }} &mdash; {{ value }}
+            {% endif %}
           </li>
         {% endfor %}
       </ul>

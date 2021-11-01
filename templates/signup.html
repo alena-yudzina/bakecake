@@ -16,7 +16,7 @@
   <!-- Фамилия -->
   {% include '_signup_field.html' with field=form.last_name label='Фамилия' %}
   <!-- Контактный телефон -->
-  {% include '_signup_field.html' with field=form.phonenumber label='Контактный телефон' %}
+  {% include '_signup_field.html' with field=form.phonenumber label='Телефон' %}
   <!-- Адрес -->
   {% include '_signup_field.html' with field=form.address label='Ваш адрес' %}
   <!-- Ссылка на любую соцсеть (по желанию) -->
@@ -25,8 +25,8 @@
   <div class="row mb-3">
     <div class="col-sm-7 me-auto ms-auto ps-4">
         <input type="checkbox" name="agreement" class="form-check-input border border-secondary" id="{{ form.agreement.auto_id }}">
-        <span class="small">
-          <a href="https://netrack.ru/storage/2019/12/Prilozhenie-N2.-Forma-soglasiya-na-obrabotku-personalnykh-dannykh.pdf">Согласие</a> на обработку персональных данных
+        <span class="fs-6">
+          <a href="https://netrack.ru/storage/2019/12/Prilozhenie-N2.-Forma-soglasiya-na-obrabotku-personalnykh-dannykh.pdf" target="_blank">Согласие</a> на обработку персональных данных
         </span>
         <span class="text-danger">*</span>
         {% include '_errors.html' with field=form.agreement %}
@@ -37,7 +37,7 @@
     <div class="col-sm-9 me-auto ms-auto">
       <div class="row">
         <div class="col-6 col-sm-5 ms-auto">
-          <span class="small">Придумайте пароль</span>
+          <span class="fs-6">Придумайте пароль</span>
         </div>
         <div class="col-6 col-sm-4 me-auto">
           <div class="input-group input-group-sm mb-2 border border-secondary rounded">
@@ -60,7 +60,7 @@
     <div class="col-sm-9 me-auto ms-auto">
       <div class="row">
         <div class="col-6 col-sm-5 ms-auto">
-          <span class="small">Повторите пароль</span>
+          <span class="fs-6">Повторите пароль</span>
         </div>
         <div class="col-6 col-sm-4 me-auto">
           <div class="input-group input-group-sm mb-2 border border-secondary rounded">

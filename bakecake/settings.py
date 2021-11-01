@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third party apps
     'phonenumber_field',
-    'crispy_forms',
     # local_apps
     'users.apps.UsersConfig',
     'shop.apps.ShopConfig',
@@ -109,4 +108,7 @@ LOGIN_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+PHONENUMBER_DB_FORMAT = 'NATIONAL'
+PHONENUMBER_DEFAULT_FORMAT = 'NATIONAL'
+PHONENUMBER_DEFAULT_REGION = 'RU'
