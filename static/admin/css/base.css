@@ -907,6 +907,7 @@ table#change-history tbody th {
     align-items: center;
     padding: 10px 40px;
     background-size: cover;
+    background-color: black;
     color: var(--header-color);
     overflow: hidden;
 }
@@ -927,7 +928,7 @@ table#change-history tbody th {
     padding: 0;
     margin: 0 20px 0 0;
     font-weight: 300;
-    font-size: 24px;
+    font-size: 36px;
     color: var(--accent);
 }
 
