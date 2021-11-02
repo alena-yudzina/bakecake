@@ -15,7 +15,7 @@ class SignUpView(CreateView):
 
 @login_required
 def show_orders(request):
-	return render(request=request, template_name='user.html', context={'user': request.user})
+    return render(request=request, template_name='user.html', context={'user': request.user})
 
 
 @login_required

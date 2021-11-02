@@ -9,10 +9,11 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ['username', 'first_name', 'last_name' ]
+    list_display = ['username', 'first_name', 'last_name']
     fieldsets = UserAdmin.fieldsets + (
         (None, {'fields': ('phonenumber', 'address', 'social_network')}),
     )
+
 
 @admin.register(UsersCount)
 class UsersCountAdmin(admin.ModelAdmin):

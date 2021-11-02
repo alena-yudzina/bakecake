@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -13,7 +12,7 @@ def validate_agreement(value):
 
 
 class CustomUser(AbstractUser):
-    
+
     first_name = models.CharField(
         verbose_name='Имя',
         max_length=50
@@ -33,7 +32,7 @@ class CustomUser(AbstractUser):
     address = models.CharField(
         'Адрес',
         max_length=200,
-    ) 
+    )
 
     agreement = models.BooleanField(
         'Согласие на обработку персональных даных',

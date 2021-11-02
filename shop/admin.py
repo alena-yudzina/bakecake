@@ -1,27 +1,16 @@
 import collections
 import csv
 
-from django.contrib.auth import get_user_model
 from django.contrib import admin
 from django.contrib.admin import sites
+from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.http.response import HttpResponse
 from django.urls import path
-
 from my_stat import models
 
-from .models import (
-    CakeLevel,
-    CakeForm,
-    Topping,
-    Berry,
-    Decor,
-    Cake,
-    Order,
-    CancellationOrder,
-    PromoCode
-)
-
+from .models import (Berry, Cake, CakeForm, CakeLevel, CancellationOrder,
+                     Decor, Order, PromoCode, Topping)
 
 User = get_user_model()
 
@@ -77,9 +66,6 @@ admin.site.register([CakeLevel,
 
 
 def get_statistics():
-    statuses = collections.Counter(
-            order.get_status_display() for order in Order.objects.only('status')
-        ).items()
 
     statistics = {
         'orders': {'Всего заказов': Order.objects.count()},

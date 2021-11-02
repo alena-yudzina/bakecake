@@ -23,22 +23,22 @@ class CakeConstructorForm(forms.Form):
     cake_level = CakeConstructorChoiceField(
         multiple=False,
         queryset=CakeLevel.objects.all(),
-        initial=CakeLevel.objects.first()    
+        initial=CakeLevel.objects.first()
     )
     cake_form = CakeConstructorChoiceField(
         multiple=False,
         queryset=CakeForm.objects.all(),
-        initial=CakeForm.objects.first()   
+        initial=CakeForm.objects.first()
     )
     topping = CakeConstructorChoiceField(
         multiple=False,
         queryset=Topping.objects.all(),
-        initial=Topping.objects.first()   
+        initial=Topping.objects.first()
     )
     berry = CakeConstructorChoiceField(
         multiple=True,
         queryset=Berry.objects.all(),
-        initial=Berry.objects.first()   
+        initial=Berry.objects.first()
     )
     decor = CakeConstructorChoiceField(
         multiple=True,
@@ -84,5 +84,5 @@ class OrderDetailsForm(forms.Form):
                 'min': initial_datetime()
             }
         ),
-        help_text = 'Минимальное время доставки 5 часов.'
+        help_text='Минимальное время доставки 5 часов.'
     )

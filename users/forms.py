@@ -42,8 +42,9 @@ class CustomUserCreationForm(UserCreationForm):
             'address': TextInput(attrs={"class": "form-control"}),
             'phonenumber': TextInput(attrs={"class": "form-control"}),
             'password1': forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'form-control'}),
-            'password2': forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'form-control'}),            
+            'password2': forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'form-control'}),
         }
+
 
 class CustomUserChangeForm(UserChangeForm):
 
