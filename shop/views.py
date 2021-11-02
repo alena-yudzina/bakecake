@@ -42,7 +42,7 @@ def order_details(request):
                 pass
     total_price = sum(prices)
     order_form = OrderDetailsForm(
-        initial={'price': total_price, 'destination': request.user.address }
+        initial={'price': total_price, 'destination': request.user.address}
     )
     return render(
         request,
@@ -65,7 +65,7 @@ def make_order(request):
     new_cake.save()
     cake_form.save_m2m()
     # берем итоговую цену заказа (генерируется на фронте,см.`static/promo.js`)
-    total_price=request.POST.get('cake_price')
+    total_price = request.POST.get('cake_price')
     # берем при наличии промокод (проверяется на фронте,см.`static/promo.js`)
     if request.POST.get('promo_code'):
         promo_code = PromoCode.objects.get(code=request.POST.get('promo_code'))

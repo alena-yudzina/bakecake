@@ -18,7 +18,7 @@ class CakeConstructorForm(forms.ModelForm):
         }
         super().__init__(**kwargs)
         for field in self.fields:
-            self.fields[field].required = False 
+            self.fields[field].required = False
 
     class Meta:
         model = Cake
