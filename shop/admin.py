@@ -73,6 +73,13 @@ class BakeCakeStatAdmin(admin.ModelAdmin):
         return response
 
 
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['client', 'cake', 'destination', 'delivery_time', 'total_price']
+    list_display_links = ['cake']
+
+
+
 admin.site.register([CakeLevel,
                      CakeForm,
                      Topping,
@@ -80,6 +87,5 @@ admin.site.register([CakeLevel,
                      Decor,
                      Cake,
                      CancellationOrder,
-                     Order,
                      PromoCode,
                      User])

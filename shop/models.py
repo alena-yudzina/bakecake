@@ -164,7 +164,7 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return f'Заказ {self.client.username} на {self.delivery_time}, сумма {self.total_price}'
+        return f'Заказ {self.client.username} на {self.delivery_time.strftime("%d-%m-%Y %H:%M")}, сумма {self.total_price}'
 
 
 class CancellationOrder(models.Model):
