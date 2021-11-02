@@ -81,16 +81,15 @@ def make_order(request):
     )
     return redirect(urls.reverse('account'))
 
-
 def get_and_check_promo_code(request):
     actualPromoCode = PromoCode.objects.last()
     if not actualPromoCode:
         return JsonResponse(
-            {'actualCode': '!&nfh!zkji!', 'thisClientUsed': False}
+            {'actualCode': None, 'thisClientUsed': False}
         )
     code_is_used = request.user.orders.filter(
         promo_code__code=actualPromoCode
     ).exists()
     return JsonResponse(
-        {'actualCode': actualPromoCode, 'thisClientUsed': code_is_used}
+        {'actualCode': actualPromoCode.code, 'thisClientUsed': code_is_used}
     )

@@ -6,6 +6,7 @@ const priceFromConstructor = Number.parseInt(
 // Собираем в DOM нужные элементы
 const currentPriceDisplay = document.querySelector('#total_price');
 const deliveryDateTimeInput = document.querySelector('#id_delivery_time');
+const userPromoCodeBlock = document.querySelector('#promoBlock');
 const userPromoCodeInput = document.querySelector('#promo');
 const userPromoCodeHiddenInput = document.querySelector('#promo_code');
 const promoCodeCheckingResult = document.querySelector('#promocode_checking');
@@ -69,17 +70,12 @@ const changePriceDueToUrgency = () => {
 // с этими данными будут сравниваться инпуты юзера
 const promoCodeStatus = [];
 // функция для запроса к API, ответ распиливается и помещается в список promoCodeStatus
-const getPromoCodeStatus = () => {
-    const makeRequest = async() => {
-        const response = await fetch('http://localhost:8000/get_code');
-        const { actualCode, thisClientUsed } = await response.json();
-        promoCodeStatus.push(actualCode, thisClientUsed);
-    }
-    makeRequest();
+async function getPromoCodeStatus() {
+    const response = await fetch('http://localhost:8000/get_code');
+    const { actualCode, thisClientUsed } = await response.json();
+    console.log(actualCode);
+    promoCodeStatus.push(actualCode, thisClientUsed);
 }
-
-// запрашиваем с сервера данные об актуальном промокоде
-getPromoCodeStatus();
 
 const userPromoCodeInputHandler = () => {
         const userInput = document.querySelector('#promo').value;
@@ -112,6 +108,18 @@ const userPromoCodeInputHandler = () => {
     }
 
 /* Вешаем слушателей */
+window.addEventListener(
+    'load',
+    async () => {
+        // запрашиваем с сервера данные об актуальном промокоде
+        await getPromoCodeStatus();
+        const [actualCode, _] = promoCodeStatus;
+        // блокируем поле с промиком, если актуальных промиков нет
+        if (!actualCode) {
+            userPromoCodeBlock.remove();
+        }
+    }
+)
 
 // Повесили слушателя события инпута в поле с датой и временем
 deliveryDateTimeInput.addEventListener(
