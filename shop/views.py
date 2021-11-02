@@ -2,27 +2,14 @@ from django.contrib.auth.decorators import login_required
 
 from django import urls
 from django.http import JsonResponse
-
 from django.shortcuts import redirect, render
-from django.views.generic import TemplateView
 
-from shop.models import Berry, Cake, CakeLevel, CakeForm, Decor, Order, Topping, PromoCode
-
+from shop.models import Order, PromoCode
 from .forms import CakeConstructorForm, OrderDetailsForm
 
 
-def get_and_check_promo_code(request):
-    actualPromoCode = PromoCode.objects.first().code
-    code_is_used = request.user.orders.filter(
-        promo_code__code=actualPromoCode
-    ).exists()
-    return JsonResponse(
-        {'actualCode': actualPromoCode, 'thisClientUsed': code_is_used}
-    )
-
-
 def show_main_page(request):
-    return render(request, 'main_page.html')
+    return render(request, 'super_main.html')
 
 
 @login_required
@@ -40,20 +27,27 @@ def make_cake_page(request):
 def order_details(request):
     if request.method == 'GET':
         return redirect(urls.reverse('make_cake_page'))
-    cake_params = CakeConstructorForm(request.POST)
-    cake_params.is_valid()
-    total_price = sum([
-        CakeLevel.objects.get(pk=cake_params.cleaned_data['cake_level']).price,
-        CakeForm.objects.get(pk=cake_params.cleaned_data['cake_form']).price,
-        Topping.objects.get(pk__in=cake_params.cleaned_data['topping']).price,
-        *Decor.objects.filter(pk__in=cake_params.cleaned_data['decor']).values_list('price', flat=True),
-        *Berry.objects.filter(pk__in=cake_params.cleaned_data['berry']).values_list('price', flat=True)
-    ])
-    form = OrderDetailsForm(initial={'price': total_price, 'destination': request.user.address})
+    cake_form = CakeConstructorForm(data=request.POST)
+    cake_form.is_valid()
+    prices = []
+    for obj in cake_form.cleaned_data.values():
+        try:
+            prices.extend(obj.values_list('price', flat=True))
+        except AttributeError:
+            # если объект не кверисет, а объект конкретной записи
+            try:
+                prices.append(obj.price)
+            # если у объекта конкретной записи нет атрибута "цена"
+            except AttributeError:
+                pass
+    total_price = sum(prices)
+    order_form = OrderDetailsForm(
+        initial={'price': total_price, 'destination': request.user.address }
+    )
     return render(
         request,
         'order_details.html',
-        {'form': form, 'cake_params': cake_params, 'price': total_price}
+        {'order_form': order_form, 'cake_form': cake_form, 'price': total_price}
     )
 
 
@@ -61,36 +55,42 @@ def order_details(request):
 def make_order(request):
     if request.method == 'GET':
         return redirect(urls.reverse('make_cake_page'))
-    order_details = OrderDetailsForm(request.POST)
-    order_details.is_valid()
-    order_details = order_details.cleaned_data
-    cake_constructor_form = CakeConstructorForm(request.POST)
-    cake_constructor_form.is_valid()
-    cake_params = cake_constructor_form.cleaned_data
-    cake = Cake.objects.create(
-        level=CakeLevel.objects.get(pk=cake_params['cake_level']),
-        form=CakeForm.objects.get(pk=cake_params['cake_form']),
-        topping=Topping.objects.get(pk=cake_params['topping']),
-        caption_on_cake=cake_params['caption_on_cake']
-    )
-    cake.decor.add(*map(lambda pk: Decor.objects.get(pk=pk), cake_params['decor']))
-    cake.berry.add(*map(lambda pk: Berry.objects.get(pk=pk), cake_params['berry']))
-    # собираем заказ
+    order_form = OrderDetailsForm(data=request.POST)
+    order_form.is_valid()
+    order_details = order_form.cleaned_data
+    # создаём запись о заказанном торте
+    cake_form = CakeConstructorForm(data=request.POST)
+    cake_form.is_valid()
+    new_cake = cake_form.save(commit=False)
+    new_cake.save()
+    cake_form.save_m2m()
+    # берем итоговую цену заказа (генерируется на фронте,см.`static/promo.js`)
+    total_price=request.POST.get('cake_price')
+    # берем при наличии промокод (проверяется на фронте,см.`static/promo.js`)
     if request.POST.get('promo_code'):
         promo_code = PromoCode.objects.get(code=request.POST.get('promo_code'))
     else:
         promo_code = None
+    # создаём запись о заказе
     Order.objects.create(
         client=request.user,
-        cake=cake,
-        destination=order_details['destination'],
-        delivery_time=order_details['order_datetime'],
-        comment=order_details['comments'],
+        cake=new_cake,
         promo_code=promo_code,
-        total_price=request.POST.get('cake_price')
+        total_price=total_price,
+        **order_details
     )
     return redirect(urls.reverse('account'))
 
 
-class HomePageView(TemplateView):
-    template_name = 'super_main.html'
+def get_and_check_promo_code(request):
+    actualPromoCode = PromoCode.objects.last()
+    if not actualPromoCode:
+        return JsonResponse(
+            {'actualCode': '!&nfh!zkji!', 'thisClientUsed': False}
+        )
+    code_is_used = request.user.orders.filter(
+        promo_code__code=actualPromoCode
+    ).exists()
+    return JsonResponse(
+        {'actualCode': actualPromoCode, 'thisClientUsed': code_is_used}
+    )

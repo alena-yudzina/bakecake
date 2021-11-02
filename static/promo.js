@@ -5,7 +5,7 @@ const priceFromConstructor = Number.parseInt(
 
 // Собираем в DOM нужные элементы
 const currentPriceDisplay = document.querySelector('#total_price');
-const deliveryDateTimeInput = document.querySelector('#id_order_datetime');
+const deliveryDateTimeInput = document.querySelector('#id_delivery_time');
 const userPromoCodeInput = document.querySelector('#promo');
 const userPromoCodeHiddenInput = document.querySelector('#promo_code');
 const promoCodeCheckingResult = document.querySelector('#promocode_checking');

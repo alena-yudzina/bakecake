@@ -17,6 +17,14 @@
     <br>
   </div>
 </div>
+{% empty %}
+  <div class="row m-0">
+    <div class="col-sm-6 me-auto ms-auto border border-5 pt-2">
+      <p class="mb-3 fs-3">
+        У Вас пока не было заказов
+      </p>
+    </div>
+</div>
   {% endfor %}
 
 {% endblock %}

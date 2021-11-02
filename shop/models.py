@@ -100,7 +100,7 @@ class Cake(models.Model):
     decor = models.ManyToManyField(to=Decor,
                                    verbose_name='декор')
     caption_on_cake = models.CharField(blank=True,
-                                       max_length=200,
+                                       max_length=45,
                                        verbose_name='надпись на торте')
 
     class Meta:

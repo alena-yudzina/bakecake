@@ -10,40 +10,44 @@
 </div>
 <form action="{% url 'make_order' %}" class="form-group" method='POST'>
   {% csrf_token %}
-  {% for field in cake_params %}
+
+  {% for field in cake_form %}
     {{ field.as_hidden }}
   {% endfor %}
+
   <div class="row mb-0 mt-2 fs-5">
     <div class="col-sm-6 me-auto ms-auto">
       <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">
-            Куда привезти
-            {% include '_required_field.html' with field=form.order_datetime %}
+            {{ order_form.destination.label }}
+            {% include '_required_field.html' with field=order_form.destination %}
           </span>
         </div>
-        {{ form.destination }}
+        {{ order_form.destination }}
       </div>
     </div>
   </div>
+
   <div class="row mb-0 fs-5">
     <div class="col-sm-6 me-auto ms-auto">
       <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">
-            Когда
-            {% include '_required_field.html' with field=form.order_datetime %}
+            {{ order_form.delivery_time.label }}
+            {% include '_required_field.html' with field=order_form.delivery_time %}
           </span>
         </div>
-        {{ form.order_datetime }}
+        {{ order_form.delivery_time }}
       </div>
       <p class="small fs-6">
-        {{ form.order_datetime.help_text }}
-        <p id="raise_price_notification" class="small fs-6 text-primary">
-        </p>
+        {{ order_form.delivery_time.help_text }}
+        <p id="raise_price_notification"
+         class="small fs-6 text-primary"></p>
       </p>
     </div>
   </div>
+
   <div class="row mb-0 fs-5 mb-2">
     <div class="col-sm-6 me-auto ms-auto">
       <div class="input-group input-group-sm mb-2">
@@ -58,18 +62,20 @@
       <p id="promocode_checking" class="small fs-6 mb-1 mt-0"></p>
     </div>
   </div>
+
   <div class="row mb-0 fs-5">
     <div class="col-sm-6 me-auto ms-auto">
       <div class="input-group input-group-sm mb-0">
         <div class="input-group-prepend">
           <span class="input-group-text">
-            Комментарий (не обязательно)
+            {{ order_form.comment.label }}
           </span>
         </div>
       </div>
-      {{ form.comments }}
+      {{ order_form.comment }}
     </div>
   </div>
+
   <div class="row mb-3 mt-0 fs-5">
     <div class="col-sm-6 mt-0 me-auto ms-auto">
       <div class="container border border-1 text-center">
@@ -84,11 +90,15 @@
     </div>
     </div>
   </div>
-  <div class="row mb-3 ps-2 pe-2 fs-5">
-    <div class="col-6 p-2 m-auto">
-      <input type="submit" value="Жду торт!" id="submit_order" class="btn btn-primary" style="width: 100%;">
+
+  <div class="row mb-3">
+    <div class="col-sm-6 m-auto">
+      <div class="input-group input-group-sm d-flex justify-content-center">
+        <input type="submit" value="Жду торт!" class="btn btn-primary fs-3">
+      </div>
     </div>
   </div>
+
 </form>
 {% endblock content %}
 {% block script %}

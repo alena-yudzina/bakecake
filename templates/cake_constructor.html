@@ -10,28 +10,29 @@
 </div>
 <form action="{% url 'order_details' %}" method='POST' class="ms-3 me-3">
   {% csrf_token %}
-  {% include '_cake_params.html' with part='Число уровней' options=form.cake_level %}
-  {% include '_cake_params.html' with part='Форма ' options=form.cake_form %}
-  {% include '_cake_params.html' with part='Топпинг' options=form.topping %}
-  {% include '_cake_params.html' with part='Ягоды' options=form.berry %}
-  {% include '_cake_params.html' with part='Декор' options=form.decor %}
+  {% include '_cake_params.html' with part=form.level.label options=form.level %}
+  {% include '_cake_params.html' with part=form.form.label options=form.form %}
+  {% include '_cake_params.html' with part=form.topping.label options=form.topping %}
+  {% include '_cake_params.html' with part=form.berry.label options=form.berry %}
+  {% include '_cake_params.html' with part=form.decor.label options=form.decor %}
   <div class="row mb-3 fs-5">
     <div class="col-sm-6 mt-2 me-auto ms-auto">
       <h4 class="fs-4 mb-2">
         {{ form.caption_on_cake.label }}
       </h4>
       <div class="input-group input-group-sm mt-2 mb-3" style="max-width: 31ch;">
-          {{ form.caption_on_cake }}
+        {{ form.caption_on_cake }}
       </div>
       <p class="small fs-6">
-        {{ form.caption_on_cake.help_text.required }}
         {{ form.caption_on_cake.help_text }}
       </p>
     </div>
   </div>
-  <div class="row mb-3 fs-5">
-    <div class="col-6 p-2 m-auto">
-      <input type="submit" value="Собрать торт" class="btn btn-primary" style="width: 100%;">
+  <div class="row mb-3">
+    <div class="col-sm-6 m-auto">
+      <div class="input-group input-group-sm d-flex justify-content-center">
+        <input type="submit" value="Собрать торт!" class="btn btn-primary fs-3">
+      </div>
     </div>
   </div>
 </form>
