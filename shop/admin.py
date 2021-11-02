@@ -1,16 +1,15 @@
-import collections
 import csv
 
 from django.contrib import admin
 from django.contrib.admin import sites
 from django.contrib.auth import get_user_model
-from django.db.models import Count
 from django.http.response import HttpResponse
 from django.urls import path
 
 from .models import (Berry, Cake, CakeForm, CakeLevel, CancellationOrder,
                      Decor, Order, PromoCode, Topping)
 from bakecake_statistics.models import OrderStatistics
+from bakecake_statistics.stat_utils import get_statistics
 
 
 User = get_user_model()
@@ -56,28 +55,6 @@ bake_cake_site = BakeCakeAdminSite()
 admin.site = bake_cake_site
 sites.site = bake_cake_site
 admin.site.index_title = 'Управление магазином BakeCake'
-
-
-def get_statistics():
-
-    statistics = {
-        'orders': {'Всего заказов': Order.objects.count()},
-        'statuses': dict(collections.Counter(
-            order.get_status_display() for order in Order.objects.only('status')
-            )
-        ),
-        'clients': {'Всего клиентов': User.objects.filter(is_staff=False).count()},
-        'topping': dict(
-            Cake.objects.values_list('topping__name').annotate(total=Count('id'))
-        ),
-        'berry': dict(
-            Cake.objects.values_list('berry__name').annotate(total=Count('id'))
-        ),
-        'decor': dict(
-            Cake.objects.values_list('decor__name').annotate(total=Count('id'))
-        )
-    }
-    return statistics
 
 
 @admin.register(OrderStatistics)
