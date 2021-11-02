@@ -176,19 +176,3 @@ class CancellationOrder(models.Model):
 
     class Meta:
         verbose_name_plural = 'Отмены заказов'
-
-
-class OrderSummary(Order):
-
-    class Meta:
-        proxy = True
-        verbose_name = 'Статистика по статусам заказов'
-        verbose_name_plural = 'Статистика по статусам заказов'
-
-
-class CancellationOrderSummary(CancellationOrder):
-
-    class Meta:
-        proxy = True
-        verbose_name = 'Статистика отмененных заказов'
-        verbose_name_plural = 'Статистика отмененных заказов'

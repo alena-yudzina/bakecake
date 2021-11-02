@@ -13,11 +13,11 @@
 {% block branding %}
 
   <div>
-  <h1 id="branding">
-    <a href="{% url 'home' %}">
-      <span style="color: gold">B</span>ake<span style="color: gold">C</span>ake
+  <h3 id="branding" style="font-size: large;">
+    <a href="{% url 'home' %}"style=" color: black;">
+      BakeCake
     </a>
-  </h1>
+  </h3>
   </div>
   {% if request.resolver_match.view_name != 'admin:login' %}
   <div style="margin-top: 50px;">

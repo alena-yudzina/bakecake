@@ -906,7 +906,6 @@ table#change-history tbody th {
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    background-image: url('../../logo.png');
     background-size: cover;
     color: var(--header-color);
     overflow: hidden;

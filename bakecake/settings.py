@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from environs import Env
@@ -29,7 +28,7 @@ INSTALLED_APPS = [
     # local_apps
     'users.apps.UsersConfig',
     'shop.apps.ShopConfig',
-    'my_stat.apps.MyStatConfig'
+    'bakecake_statistics.apps.BakecakeStatisticsConfig'
 ]
 
 MIDDLEWARE = [
@@ -47,7 +46,7 @@ ROOT_URLCONF = 'bakecake.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,11 +96,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-
 LOGIN_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_FORMAT = 'NATIONAL'
