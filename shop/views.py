@@ -4,7 +4,7 @@ from django import urls
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
-from shop.models import Order, PromoCode
+from shop.models import PromoCode
 from .forms import CakeConstructorForm, OrderDetailsForm
 
 
@@ -72,13 +72,12 @@ def make_order(request):
     else:
         promo_code = None
     # создаём запись о заказе
-    Order.objects.create(
-        client=request.user,
-        cake=new_cake,
-        promo_code=promo_code,
-        total_price=total_price,
-        **order_details
-    )
+    new_order = order_form.save(commit=False)
+    new_order.client = request.user
+    new_order.promo_code = promo_code
+    new_order.total_price = total_price
+    new_order.cake = new_cake
+    new_order.save()
     return redirect(urls.reverse('account'))
 
 def get_and_check_promo_code(request):
